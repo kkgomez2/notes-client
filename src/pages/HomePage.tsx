@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import RateLimited from "../components/RateLimited";
+import ideasApi from "../lib/api";
 import toast from "react-hot-toast";
 import type { Idea } from "../types/Idea";
 import IdeaCard from "../components/IdeaCard";
 
-type Props = {};
-
-const HomePage = (props: Props) => {
+const HomePage = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [ideas, setIdeas] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchNotes = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/notes", {
-        method: "GET",
-        mode: "cors",
-      });
+      const res = await ideasApi.getIdeas();
 
       if (res.ok) {
         const data = await res.json();
@@ -52,7 +48,7 @@ const HomePage = (props: Props) => {
         {ideas.length > 0 && !isRateLimited && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ideas.map((idea: Idea) => {
-              return (<IdeaCard idea={idea}/>)
+              return (<IdeaCard idea={idea} setIdeas={setIdeas}/>)
             })}
             </div>
         )}

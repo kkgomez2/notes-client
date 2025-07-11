@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import ideasApi from "../lib/api";
 import { Link, useNavigate } from "react-router";
 
 const CreatePage = () => {
@@ -20,26 +21,20 @@ const CreatePage = () => {
 
     setLoading(true);
     try {
-      let res = await fetch("http://localhost:3001/api/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify({
-          title: title,
-          content: content,
-        }),
-      });
-
+      let res = await ideasApi.createIdea(title, content);
       if (res.ok) {
         toast.success("Idea created!");
         navigate("/");
       } else {
-        throw "Error creating data";
+        if (res.status === 429) {
+          //move status check to error block
+          toast.error("Whoa, too many ideas! Take a breather!");
+        }
+        throw Response.error();
       }
     } catch (error) {
       console.error(error);
+
       toast.error("Error creating data");
     } finally {
       setLoading(false);
