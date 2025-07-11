@@ -34,16 +34,31 @@ const createIdea = async (title: string, content: string) => {
   return res;
 };
 
-const deleteIdea = async (id: string) => {
-  
+const updateIdea = async (id: string, title: string, content: string) => {
   let res = await fetch(`${apiBaseUrl}/notes/${id}`, {
-    method: "DELETE",
-    mode: "cors"
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    body: JSON.stringify({
+      title: title,
+      content: content,
+    }),
   });
 
   return res;
-}
+};
 
-const ideasApi = { getIdeas, getIdeaById, createIdea, deleteIdea };
+const deleteIdea = async (id: string) => {
+  let res = await fetch(`${apiBaseUrl}/notes/${id}`, {
+    method: "DELETE",
+    mode: "cors",
+  });
+
+  return res;
+};
+
+const ideasApi = { getIdeas, getIdeaById, createIdea, updateIdea, deleteIdea };
 
 export default ideasApi;
