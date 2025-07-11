@@ -9,6 +9,15 @@ const getIdeas = async () => {
   return res;
 };
 
+const getIdeaById = async (id: string) => {
+  let res = await fetch(`${apiBaseUrl}/notes/${id}`, {
+    method: "GET",
+    mode: "cors",
+  });
+
+  return res;
+};
+
 const createIdea = async (title: string, content: string) => {
   let res = await fetch(`${apiBaseUrl}/notes`, {
     method: "POST",
@@ -35,6 +44,6 @@ const deleteIdea = async (id: string) => {
   return res;
 }
 
-const ideasApi = { getIdeas, createIdea, deleteIdea };
+const ideasApi = { getIdeas, getIdeaById, createIdea, deleteIdea };
 
 export default ideasApi;
