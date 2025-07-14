@@ -1,4 +1,4 @@
-const apiBaseUrl = "http://localhost:3001/api";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const getIdeas = async () => {
   let res = await fetch(`${apiBaseUrl}/notes`, {
