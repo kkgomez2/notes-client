@@ -58,6 +58,7 @@ const IdeaDetailPage = () => {
     }
 
     try {
+      setSaving(true);
       let res = await ideasApi.updateIdea(idea._id, idea.title, idea.content);
       if (res.ok) {
         toast.success("Idea updated!");
@@ -65,6 +66,8 @@ const IdeaDetailPage = () => {
     } catch (error) {
       console.error(error);
       toast.error("Failed to update idea");
+    } finally {
+      setSaving(false);
     }
   };
 
