@@ -48,7 +48,7 @@ const IdeaDetailPage = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to delete idea")
+      toast.error("Failed to delete idea");
     }
   };
   const handleSave = async () => {
@@ -60,11 +60,11 @@ const IdeaDetailPage = () => {
     try {
       let res = await ideasApi.updateIdea(idea._id, idea.title, idea.content);
       if (res.ok) {
-
         toast.success("Idea updated!");
       }
     } catch (error) {
-      
+      console.error(error);
+      toast.error("Failed to update idea");
     }
   };
 
